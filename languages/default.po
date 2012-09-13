@@ -1,0 +1,95 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Network Comment Ban\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-03-21 19:49-0600\n"
+"PO-Revision-Date: 2012-03-21 19:49-0600\n"
+"Last-Translator: Mika Epstein (Ipstenu) <ipstenu@ipstenu.org>\n"
+"Language-Team: Ipstenu <ipstenu@ipstenu.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: _;gettext;gettext_noop;__;_e\n"
+"X-Poedit-Basepath: /Users/ipstenu/Development/svn/wordpress/plugins/network-comment-ban/trunk\n"
+"X-Poedit-Language: English\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: sitewide-comment-control.php:111
+#: sitewide-comment-control.php:124
+#: sitewide-comment-control.php:161
+msgid "Sitewide Comment Control"
+msgstr ""
+
+#: sitewide-comment-control.php:111
+msgid "Comment Control"
+msgstr ""
+
+#: sitewide-comment-control.php:122
+msgid "Readme"
+msgstr ""
+
+#: sitewide-comment-control.php:125
+msgid "When you run a network, blacklisting commenters is handled per-site. That's normally okay, but sometimes people decide to be trolls and spam your whole network. This plugin allows you to ban, spam or moderate an unregistered commenter network wide. It does not replace the per-site blacklists or moderation lists, but simply adds on to it."
+msgstr ""
+
+#: sitewide-comment-control.php:126
+msgid "When a user posts a comment and they're on the list, they are redirected to the post they just tried to comment on, but their comment has been shunted to the mysterious black hole along with your socks. If you pick 'blackhole', no one will ever see the comment. Pick 'spam' and they go to spam. Pick 'moderate' and the post is forced into moderation."
+msgstr ""
+
+#: sitewide-comment-control.php:127
+msgid "A sample email of spammer@example.com is included in the plugin for you to play with."
+msgstr ""
+
+#: sitewide-comment-control.php:128
+msgid "Limited free support can be found in the WordPress forums."
+msgstr ""
+
+#: sitewide-comment-control.php:130
+msgid "Support Forums"
+msgstr ""
+
+#: sitewide-comment-control.php:131
+msgid "Plugin Site"
+msgstr ""
+
+#: sitewide-comment-control.php:132
+msgid "Donate"
+msgstr ""
+
+#: sitewide-comment-control.php:182
+msgid "Options Updated!"
+msgstr ""
+
+#: sitewide-comment-control.php:188
+msgid "Mark the comment as..."
+msgstr ""
+
+#: sitewide-comment-control.php:189
+msgid "Select which option should be used to process comments. Using 'blackhole' with delete the comment without any notification to the commenter or the admin, 'Mark as Spam' will put the comment in the site's spam list, and using 'Moderate' will put the comment in that site's moderation queue."
+msgstr ""
+
+#: sitewide-comment-control.php:194
+msgid "Blackhole"
+msgstr ""
+
+#: sitewide-comment-control.php:195
+msgid "Mark as Spam"
+msgstr ""
+
+#: sitewide-comment-control.php:196
+msgid "Moderate"
+msgstr ""
+
+#: sitewide-comment-control.php:200
+msgid "Email List"
+msgstr ""
+
+#: sitewide-comment-control.php:201
+msgid "The email addresses added below will not be allowed to leave comments on any site on your network. Partial email addresses are accepted, but use this wisely. If you put 'a' in the form, all email addresses with the letter 'a' will be flagged."
+msgstr ""
+
+#: sitewide-comment-control.php:208
+msgid "Update Options"
+msgstr ""
+
