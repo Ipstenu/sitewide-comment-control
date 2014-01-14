@@ -126,7 +126,7 @@ function ippy_scc_plugin_help() {
 		'<ul>'.
 			'<li><a href="http://wordpress.org/tags/sitewide-comment-control?forum_id=10#postform">'. __( 'Support Forums','sfc').'</a></li>'.
 			'<li><a href="http://tech.ipstenu.org/my-plugins/sitewide-comment-control/">'. __( 'Plugin Site','sfc').'</a></li>'.
-			'<li><a href="https://www.wepay.com/donations/halfelf-wp">'. __( 'Donate','sfc').'</a></li>'.
+			'<li><a href="https://store.halfelf.org/donate/">'. __( 'Donate','sfc').'</a></li>'.
 		'</ul>'
 	));
 
@@ -140,7 +140,7 @@ register_activation_hook( __FILE__, 'ippy_scc_activate' );
 add_filter('plugin_row_meta', 'ippy_scc_donate_link', 10, 2);
 function ippy_scc_donate_link($links, $file) {
         if ($file == plugin_basename(__FILE__)) {
-                $donate_link = '<a href="https://www.wepay.com/donations/halfelf-wp">Donate</a>';
+                $donate_link = '<a href="https://store.halfelf.org/donate/">Donate</a>';
                 $links[] = $donate_link;
         }
         return $links;
