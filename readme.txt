@@ -2,7 +2,7 @@
 Contributors: Ipstenu
 Tags: comment, ban, moderate, spam, multisite, wpmu
 Requires at least: 3.3
-Tested up to: 3.9
+Tested up to: 4.3
 Stable tag: 1.5
 Donate link: https://store.halfelf.org/donate/
 
@@ -26,7 +26,7 @@ A sample email of spammer@example.com is included in the plugin for you to play 
 * 24 April, 2012 by Ipstenu
 * Uninstall was broken, and I am so, so, so, sorry.
 
-= 1.3 = 
+= 1.3 =
 * 17 April, 2012 by Ipstenu
 * Readme cleanup, fixing URLs etc.
 
@@ -78,7 +78,7 @@ No, it only blocks by email address.
 
 = Why don't you block IPs? =
 
-I don't find it useful, and I think WP's the wrong tool. If you're blocking IPs, given how dynamic they are, it won't do you any good in the long run. 
+I don't find it useful, and I think WP's the wrong tool. If you're blocking IPs, given how dynamic they are, it won't do you any good in the long run.
 
 = Will this block partial emails? =
 
