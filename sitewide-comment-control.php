@@ -107,7 +107,7 @@ function ippy_scc_admin_add_page() {
 add_filter('plugin_row_meta', 'ippy_scc_donate_link', 10, 2);
 function ippy_scc_donate_link($links, $file) {
         if ($file == plugin_basename(__FILE__)) {
-                $donate_link = '<a href="https://store.halfelf.org/donate/">Donate</a>';
+                $donate_link = '<a href="https://ko-fi.com/A236CENl/">Donate</a>';
                 $links[] = $donate_link;
         }
         return $links;
