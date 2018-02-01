@@ -3,7 +3,7 @@ Contributors: Ipstenu
 Tags: comment, ban, moderate, spam, multisite, wpmu
 Requires at least: 4.0
 Tested up to: 4.9
-Stable tag: 2.1
+Stable tag: 3.0
 Donate link: https://ko-fi.com/A236CENl/
 
 Blacklist, moderate, or spam a list of unregistered commenters across your entire Multisite Network.
@@ -80,6 +80,10 @@ No, and what's the point? You already have a blacklist for that.
 I don't know. Let me know!
 
 ==Changelog==
+
+= 3.0 =
+* ??? by Ipstenu
+* Allow for 'group' moderation
 
 = 2.1 = 
 * 22 March 2016 by Ipstenu
