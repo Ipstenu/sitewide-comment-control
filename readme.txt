@@ -4,32 +4,37 @@ Tags: comment, ban, moderate, spam, multisite, wpmu
 Requires at least: 4.0
 Tested up to: 4.9
 Stable tag: 3.0
-Donate link: https://ko-fi.com/A236CENl/
+Donate link: https://ko-fi.com/A236CEN/
 
-Blacklist, moderate, or spam a list of unregistered commenters across your entire Multisite Network.
+Discard, moderate, or spam a list of unregistered commenters across your entire Multisite Network.
 
 == Description ==
 
-When you run a network, blacklisting commenters is handled per-site. That's normally okay, but sometimes people decide to be trolls and spam your whole network. This plugin allows you to ban, spam or moderate an unregistered commenter network wide. It does not replace the per-site blacklists or moderation lists, but simply adds on to it.
+When you run a network, managing commenters is handled per-site. That's normally okay, but sometimes people decide to be trolls and spam your whole network. This plugin allows you to ban, spam or moderate an unregistered commenter network wide. It does not replace the per-site blacklists or moderation lists, but acts as addition.
 
 When a user posts a comment and they're on the list, they are redirected to the post they just tried to comment on, but their comment has been shunted to the mysterious black hole along with your socks. If you pick 'blackhole', no one will ever see the comment. Pick 'spam' and they go to spam. Pick 'moderate' and the comment is forced into moderation.
 
-A sample email of spammer@example.com is included in the plugin for you to play with.
+A sample email of `spammer@example.com` is included in the plugin for you to experiment with.
 
 * [Support](http://wordpress.org/tags/sitewide-comment-control?forum_id=10#postform)
 * [Plugin Site](http://halfelf.org/plugins/sitewide-comment-control/)
-* [Donate](https://ko-fi.com/A236CENl/)
+* [Donate](https://ko-fi.com/A236CEN/)
 
-= Credits =
+=== Credits ===
 
 Thanks to Jan for the idea of moderating and spamming. Thanks to Joey and Helen for reminding me about `get_permalink()` and it's silly inconsistencies.
 
-= Issues =
+=== Issues ===
+
 * Setting a comment to 'moderate' doesn't always show the 'your comment is in moderation...' to the user, which can be confusing.
+
+=== Privacy Notes ===
+
+This plugin does not track any data other than what is submitted by commenters. No additional data is recorded. It compares the input data to the lists, and acts accordingly.
 
 == Installation ==
 
-No special instructions needed. This plugin is only network activatable.
+No special instructions needed. This plugin is only network activate-able.
 
 == Screenshots ==
 
@@ -51,7 +56,7 @@ No, it only blocks by email address.
 
 = Why don't you block IPs? =
 
-I don't find it useful to do in WordPress. If you're blocking IPs, given how dynamic they are, it won't do you any good in the long run on the app level. This should be done at the server level.
+I don't find it useful. If you're blocking IPs, given how dynamic they are, it won't do you any good in the long run on the app level. This should be done at the server level.
 
 = Will this block partial emails? =
 
@@ -73,7 +78,7 @@ Yes, it does.
 
 = Does this work on Single Site installs? =
 
-No, and what's the point? You already have a blacklist for that.
+No.
 
 = Does this work on BuddyPress? =
 
@@ -94,5 +99,3 @@ I don't know. Let me know!
 * 30 October 2013 by Ipstenu
 * Works with 3.7
 * Removing sort to stop sorting
-
-== Upgrade Notice ==
