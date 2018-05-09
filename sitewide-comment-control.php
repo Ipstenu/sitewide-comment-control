@@ -8,22 +8,22 @@ Author: Mika Epstein (Ipstenu)
 Author URI: http://halfelf.org/
 Network: true
 
-Copyright 2012-16 Mika Epstein (email: ipstenu@halfelf.org)
+Copyright 2012-18 Mika Epstein (email: ipstenu@halfelf.org)
 
-    This file is part of Sitewide Comment Control, a plugin for WordPress.
+	This file is part of Sitewide Comment Control, a plugin for WordPress.
 
-    Sitewide Comment Control is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 2 of the License, or
-    (at your option) any later version.
+	Sitewide Comment Control is free software: you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation, either version 2 of the License, or
+	(at your option) any later version.
 
-    Sitewide Comment Control is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+	Sitewide Comment Control is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with WordPress.  If not, see <http://www.gnu.org/licenses/>.
+	You should have received a copy of the GNU General Public License
+	along with WordPress.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 // First we check to make sure you meet the requirements
@@ -47,23 +47,24 @@ function ippy_scc_preprocess ($data) {
 	get_currentuserinfo();
 	if ( is_user_logged_in() ) { return $data; }
 
-    // Get blacklist
-    $ippy_scc_string = get_site_option('ippy_scc_keys');
-    $ippy_scc_array = explode("\n", $ippy_scc_string);
-    $ippy_scc_size = sizeof($ippy_scc_array);
+	// Get blacklist
+	$ippy_scc_string = get_site_option('ippy_scc_keys');
+	$ippy_scc_array = explode("\n", $ippy_scc_string);
+	$ippy_scc_size = sizeof($ippy_scc_array);
 
-    // Go through blacklist
-    for($i = 0; $i < $ippy_scc_size; $i++) {
-            $ippy_scc_current = trim($ippy_scc_array[$i]);
+	// Go through blacklist
+	for($i = 0; $i < $ippy_scc_size; $i++) {
+			$ippy_scc_current = trim($ippy_scc_array[$i]);
 			$ippy_scc_type_now = get_site_option('ippy_scc_type');
 			if ($ippy_scc_type_now == 'moderate') $ippy_scc_type_now = 0;
-            if(stripos($comment_author_email, $ippy_scc_current) !== false) {
+
+			if(stripos($comment_author_email, $ippy_scc_current) !== false) {
 				if ( get_site_option('ippy_scc_type') == 'blackhole' ) {
 					wp_redirect( get_permalink() ); die;
 				}
 				if ( get_site_option('ippy_scc_type') == 'spam' || 'moderate' ) {
 					$time = current_time('mysql'); // Get the date
-                    $result = array(
+					$result = array(
 						'comment_post_ID' => $comment_post_ID,
 						'comment_author' => $comment_author,
 						'comment_author_email' => $comment_author_email,
@@ -81,7 +82,7 @@ function ippy_scc_preprocess ($data) {
 				}
 			wp_safe_redirect( $_SERVER['HTTP_REFERER'] ); die;
 			}
-        }
+		}
 		
 	return $data;
 }
@@ -106,11 +107,11 @@ function ippy_scc_admin_add_page() {
 
 add_filter('plugin_row_meta', 'ippy_scc_donate_link', 10, 2);
 function ippy_scc_donate_link($links, $file) {
-        if ($file == plugin_basename(__FILE__)) {
-                $donate_link = '<a href="https://ko-fi.com/A236CENl/">Donate</a>';
-                $links[] = $donate_link;
-        }
-        return $links;
+	if ($file == plugin_basename(__FILE__)) {
+		$donate_link = '<a href="https://ko-fi.com/A236CEN/">Donate</a>';
+		$links[] = $donate_link;
+	}
+	return $links;
 }
 
 // Settings Page
@@ -122,7 +123,7 @@ global $wpdb;
 <h2><?php _e('Sitewide Comment Control', 'sitewide-comment-control'); ?></h2>
 
 <?php
-    if ( isset($_POST['update'] ) && check_admin_referer( 'scc_saveit') ) {
+	if ( isset($_POST['update'] ) && check_admin_referer( 'scc_saveit') ) {
 
 		if ( $new_scc_keys = $_POST['ippy_scc_keys'] )	{
 			$new_scc_keys = explode( "\n", $new_scc_keys );
@@ -131,30 +132,29 @@ global $wpdb;
 
 			// Sanitize emails!
 			foreach ($new_scc_keys as &$keyname) {
-			    $keyname = sanitize_text_field($keyname);
+				$keyname = sanitize_text_field($keyname);
 			}
 
 			$new_scc_keys = implode( "\n", $new_scc_keys );
 			update_site_option('ippy_scc_keys', $new_scc_keys);
 			
 		} elseif ( empty( $_POST['ippy_scc_keys'] ) ) {
-            	update_site_option('ippy_scc_keys', '');
+				update_site_option('ippy_scc_keys', '');
 		}
 
 		// Update the Key (spam or blackhole)
-        if ( isset( $_POST['ippy_scc_type'] ) ) {
-	        
-	        $scc_type_array = array ('blackhole', 'spam', 'moderate');
-	        $new_scc_type = sanitize_text_field( $_POST['ippy_scc_type'] );
-	        
-	        // If it's invalid, fall back to Blackhole
-	        if ( !in_array( $new_scc_type, $scc_type_array ) ) {
-		        $new_scc_type = 'blackhole';
-	        }
-	        
-	        // SANITIZE AND VALIDATE THIS
+		if ( isset( $_POST['ippy_scc_type'] ) ) {
+
+			$scc_type_array = array ('blackhole', 'spam', 'moderate');
+			$new_scc_type = sanitize_text_field( $_POST['ippy_scc_type'] );
+
+			// If it's invalid, fall back to Blackhole
+			if ( !in_array( $new_scc_type, $scc_type_array ) ) {
+				$new_scc_type = 'blackhole';
+			}
+
 			update_site_option( 'ippy_scc_type', $new_scc_type );
-        }
+		}
 	?><div id="message" class="updated dismissable"><p><strong><?php _e('Options Updated!', 'sitewide-comment-control'); ?></strong></p></div><?php   
 	} 
 ?>
@@ -178,8 +178,8 @@ global $wpdb;
 <p><?php _e('The email addresses added below will not be allowed to leave comments on any site on your network. Partial email addresses are accepted, but use this wisely. If you put \'a\' in the form, all email addresses with the letter \'a\' will be flagged.', 'sitewide-comment-control'); ?></p>
 
 <textarea name="ippy_scc_keys" cols="40" rows="15"><?php
-        $ippy_scc_keys = get_site_option('ippy_scc_keys');
-        echo $ippy_scc_keys;
+		$ippy_scc_keys = get_site_option('ippy_scc_keys');
+		echo $ippy_scc_keys;
 ?></textarea>
 
 <p><input class='button-primary' type='submit' name='update' value='<?php _e('Update Options', 'sitewide-comment-control'); ?>' id='submitbutton' /></p>
