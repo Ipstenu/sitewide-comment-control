@@ -1,6 +1,5 @@
 # Sitewide Comment Control #
 
-This is the development repository for the Sitewide Comment Control plugin.
+This plugin was retired on 02 July 2018 due to lack of use by others.
 
-* [WP Readme](readme.txt)
-* [Changelog](changelog.txt)
+I still use it, but there's no point in maintaining it as a hosted .org plugin.
