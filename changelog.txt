@@ -1,3 +1,13 @@
+= 2.1 =
+* 22 March 2016 by Ipstenu
+* Cleaning Internationalization
+* Security: Nonces, sanitization, validation
+
+= 2.0 =
+* 30 October 2013 by Ipstenu
+* Works with 3.7
+* Removing sort to stop sorting
+
 = 1.5 =
 * 24 April, 2012 by Ipstenu
 * Uninstall was broken, and I am so, so, so, sorry.
@@ -14,6 +24,6 @@
 * 23 March, 2012 by Ipstenu
 * Minor issue with URLs. They need a closing `</a>` you know.
 
-=  1.0 =
+= 1.0 =
 * 21 March, 2012 by Ipstenu
 * First completed version.

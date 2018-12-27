@@ -1,44 +1,42 @@
 === Sitewide Comment Control ===
 Contributors: Ipstenu
-Tags: comment, ban, moderate, spam, multisite, wpmu
+Tags: comment, ban, moderate, spam, multisite, network
 Requires at least: 4.0
-Tested up to: 4.9
-Stable tag: 2.1
+Tested up to: 5.0
+Stable tag: 3.0
+PHP Version: 7.1
 Donate link: https://ko-fi.com/A236CEN/
 
-Discard, moderate, or spam a list of unregistered commenters across your entire Multisite Network.
+Trash, moderate, or spam a list of unregistered commenters across your entire Multisite Network.
 
 == Description ==
 
 When you run a network, managing commenters is handled per-site. That's normally okay, but sometimes people decide to be trolls and spam your whole network. This plugin allows you to ban, spam or moderate an unregistered commenter network wide. It does not replace the per-site blacklists or moderation lists, but acts as addition.
 
-When a user posts a comment and they're on the list, they are redirected to the post they just tried to comment on, but their comment has been shunted to the mysterious black hole along with your socks. If you pick 'blackhole', no one will ever see the comment. Pick 'spam' and they go to spam. Pick 'moderate' and the comment is forced into moderation.
+Sitewide Comment Control checks the author name, email address and IP address of a commenter. If they're found to be on the list, all comments will be shunted appropriately as determined by the Network Admin:
 
-A sample email of `spammer@example.com` is included in the plugin for you to experiment with.
-
-* [Support](http://wordpress.org/tags/sitewide-comment-control?forum_id=10#postform)
-* [Plugin Site](http://halfelf.org/plugins/sitewide-comment-control/)
-* [Donate](https://ko-fi.com/A236CEN/)
+* Trash - all flagged comments do directly to trash
+* Moderated - all flagged comments require human moderation
+* Spam - all flagged comments go to spam
 
 === Credits ===
 
-Thanks to Jan for the idea of moderating and spamming. Thanks to Joey and Helen for reminding me about `get_permalink()` and it's silly inconsistencies.
-
-=== Issues ===
-
-* Setting a comment to 'moderate' doesn't always show the 'your comment is in moderation...' to the user, which can be confusing.
+Thanks to Jan D. for the idea of moderating and spamming. Thanks to Joey and Helen for reminding me about `get_permalink()` and it's silly inconsistencies.
 
 === Privacy Notes ===
 
-This plugin does not track any data other than what is submitted by commenters. No additional data is recorded. It compares the input data to the lists, and acts accordingly.
+This plugin does not track any data other than what is submitted by commenters. No additional data is recorded. No data is sent to remote services by this plugin.
 
 == Installation ==
 
-No special instructions needed. This plugin is only network activate-able.
+No special instructions needed.
+
+This plugin is only network activate-able.
 
 == Screenshots ==
 
 1. Network Admin Menu
+2. Example of a spammed comment
 
 == Frequently Asked Questions ==
 
@@ -48,25 +46,21 @@ No, this is completely separate.
 
 = Does this list the rejected posters? =
 
-If you set comments to be spammed or moderated, they will show up in the appropriate section of your comments page. If you set comments to be blackhole'd, no one will ever see them. Ever.
+If you set comments to be spammed or moderated, they will show up in the appropriate section of your comments page. If you set comments to be trashed they get added and goes right to trash.
 
-= Will this block user names? =
+= What does this check? =
 
-No, it only blocks by email address.
-
-= Why don't you block IPs? =
-
-I don't find it useful. If you're blocking IPs, given how dynamic they are, it won't do you any good in the long run on the app level. This should be done at the server level.
+Usernames, IP addresses, and email addresses.
 
 = Will this block partial emails? =
 
-Yes. If you put `example.com` in your list, it will block `anything@example.com`. 
+Yes. If you put `example.com` in your list, it will block `anything@example.com`.
 
 **Be very careful when you do this!** If you put in just the letter `a` for example, you will block all email addresses with that letter. I strongly recommend you only use full domains ('example.com', not just 'example').
 
 = Will this block wildcards? =
 
-No. You cannot block `foo*@gmail.com` at this time. This is a highly requested feature, but it's complicated to get right without making your network unbearably slow. It doesn't scale well in my tests. Pull requests welcome.
+That's optional. The logic is a little chancy and has a higher risk of catching innocents. However if you add `spammer@example.com` and turn on Wildcard checking, then `spammer+avoid@example.com` will be caught, but `spammer+another@gmail.com` **will not** be caught. The downside to this is that `spammerama@example.com` will also be caught. Use at your own risk.
 
 = Will this block existing users? =
 
@@ -78,20 +72,27 @@ Yes, it does.
 
 = Does this work on Single Site installs? =
 
-No.
+No. But then again, you don't need this on single installs.
 
-= Does this work on BuddyPress? =
+= What happens if a site on a network wants to block someone? =
 
-I don't know. Let me know!
+Per site _blacklists_ override the network settings. This means if a site on the network marks a specific user to be blacklisted, even if the network option is set to spam, the comments will be blacklisted. On the other hand, if the network blacklists someone, that cannot be overruled.
 
-==Changelog==
+= Where can I help develop this? =
 
-= 2.1 = 
-* 22 March 2016 by Ipstenu
-* Cleaning Internationalization
-* Security: Nonces, sanitization, validation
+[Github](http://github.com/ipstenu/sitewide-comment-control) - pull requests are welcome.
 
-= 2.0 =
-* 30 October 2013 by Ipstenu
-* Works with 3.7
-* Removing sort to stop sorting
+== Changelog ==
+
+= 3.0 =
+* 27 December 2018 by Ipstenu
+* Updated: Internationalization
+* Updated: Move to OOP
+* Updated: Faster processing
+* Updated: Split apart the lists so you can ban and spam and moderate.
+* New: Wildcards now supported (with caveats)
+
+== Upgrade Notice ==
+
+= 3.0 =
+Existing lists are converted to MODERATION on update, in order to allow for more granular filtering.
