@@ -230,6 +230,7 @@ class Sitewide_Comment_Control {
 					$new_blacklist = array_filter( array_map( 'trim', $new_blacklist ) );
 					$new_blacklist = array_filter( array_map( 'sanitize_text_field', $new_blacklist ) );
 					$new_blacklist = array_unique( $new_blacklist );
+					$blacklist     = implode( "\n", $new_blacklist );
 				}
 
 				// Check Spamlist
@@ -240,6 +241,7 @@ class Sitewide_Comment_Control {
 					$new_spamlist = array_filter( array_map( 'trim', $new_spamlist ) );
 					$new_spamlist = array_filter( array_map( 'sanitize_text_field', $new_spamlist ) );
 					$new_spamlist = array_unique( $new_spamlist );
+					$spamlist     = implode( "\n", $new_spamlist );
 				}
 
 				// Check Spamlist
@@ -250,6 +252,7 @@ class Sitewide_Comment_Control {
 					$new_modlist = array_filter( array_map( 'trim', $new_modlist ) );
 					$new_modlist = array_filter( array_map( 'sanitize_text_field', $new_modlist ) );
 					$new_modlist = array_unique( $new_modlist );
+					$modlist     = implode( "\n", $new_modlist );
 				}
 
 				// Update Wildcard if needed
@@ -260,13 +263,13 @@ class Sitewide_Comment_Control {
 					'blacklist' => $new_blacklist,
 					'modlist'   => $new_modlist,
 					'spamlist'  => $new_spamlist,
-					'wildcards'  => $new_wildcard,
+					'wildcards' => $new_wildcard,
 				);
 
 				update_site_option( 'sitewide_comment_control', $new_scc );
 
 				?>
-				<div id="message" class="updated dismissable"><p><strong><?php esc_html_e( 'Options Updated!', 'sitewide-comment-control' ); ?></strong></p></div>
+				<div id="message" class="notice notice-success is-dismissible"><p><strong><?php esc_html_e( 'Options Updated!', 'sitewide-comment-control' ); ?></strong></p></div>
 				<?php
 			}
 			?>
