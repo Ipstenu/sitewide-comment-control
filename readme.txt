@@ -2,7 +2,7 @@
 Contributors: Ipstenu
 Tags: comment, ban, moderate, spam, multisite, network
 Requires at least: 4.0
-Tested up to: 5.0
+Tested up to: 5.1
 Stable tag: 3.0
 PHP Version: 7.1
 Donate link: https://ko-fi.com/A236CEN/
