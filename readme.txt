@@ -3,15 +3,15 @@ Contributors: Ipstenu
 Tags: comment, ban, moderate, spam, multisite, network
 Requires at least: 4.0
 Tested up to: 5.4
-Stable tag: 3.0
-PHP Version: 7.1
+Stable tag: 3.1
+PHP Version: 7.2
 Donate link: https://ko-fi.com/A236CEN/
 
 Trash, moderate, or spam a list of unregistered commenters across your entire Multisite Network.
 
 == Description ==
 
-When you run a network, managing commenters is handled per-site. That's normally okay, but sometimes people decide to be trolls and spam your whole network. This plugin allows you to ban, spam or moderate an unregistered commenter network wide. It does not replace the per-site blacklists or moderation lists, but acts as addition.
+When you run a network, managing commenters is handled per-site. That's normally okay, but sometimes people decide to be trolls and spam your whole network. This plugin allows you to ban, spam or moderate an unregistered commenter network wide. It does not replace the per-site block, allow, or moderation lists, but acts as addition.
 
 Sitewide Comment Control checks the author name, email address and IP address of a commenter. If they're found to be on the list, all comments will be shunted appropriately as determined by the Network Admin:
 
@@ -40,7 +40,7 @@ This plugin is only network activate-able.
 
 == Frequently Asked Questions ==
 
-= If I change the blacklist using this plugin, will it change the Comment Blacklist? =
+= If I change the blocked list using this plugin, will it change the comment block lists per site? =
 
 No, this is completely separate.
 
@@ -76,13 +76,17 @@ No. But then again, you don't need this on single installs.
 
 = What happens if a site on a network wants to block someone? =
 
-Per site _blacklists_ override the network settings. This means if a site on the network marks a specific user to be blacklisted, even if the network option is set to spam, the comments will be blacklisted. On the other hand, if the network blacklists someone, that cannot be overruled.
+Per site _block lists_ override the network settings. This means if a site on the network marks a specific user to be blocked, even if the network option is set to spam, the comments will be blocked. On the other hand, if the network blocks someone, that cannot be overruled.
 
 = Where can I help develop this? =
 
 [Github](http://github.com/ipstenu/sitewide-comment-control) - pull requests are welcome.
 
 == Changelog ==
+
+= 3.1 =
+* June 2020 by Ipstenu
+* Updated: Changed term for blocked users to Block List.
 
 = 3.0 =
 * 27 December 2018 by Ipstenu

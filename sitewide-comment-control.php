@@ -3,12 +3,12 @@
 Plugin Name: Sitewide Comment Control
 Plugin URI: http://github.com/ipstenu/sitewide-comment-control
 Description: Block specific users from commenting network wide by user ID or email.
-Version: 3.0
+Version: 3.1
 Author: Mika Epstein (Ipstenu)
 Author URI: http://halfelf.org/
 Network: true
 
-Copyright 2012-19 Mika Epstein (email: ipstenu@halfelf.org)
+Copyright 2012-20 Mika Epstein (email: ipstenu@halfelf.org)
 
 	This file is part of Sitewide Comment Control, a plugin for WordPress.
 
@@ -55,9 +55,10 @@ class Sitewide_Comment_Control {
 		add_filter( 'plugin_row_meta', array( $this, 'donate_link' ), 10, 2 );
 
 		// Rename option and clean up
+		// This is from very old instances. We moved from two options to one.
 		if ( get_site_option( 'ippy_scc_keys' ) ) {
 			$sitewide_comment_control = array(
-				'blacklist' => array( 'trash@example.com' ),
+				'blocklist' => array( 'trash@example.com' ),
 				'modlist'   => explode( "\n", get_site_option( 'ippy_scc_keys' ) ),
 				'spamlist'  => array( 'spammer@example.com' ),
 				'wildcards' => false,
@@ -66,11 +67,19 @@ class Sitewide_Comment_Control {
 			delete_site_option( 'ippy_scc_keys' );
 			delete_site_option( 'ippy_scc_type' );
 		}
+
+		// Rename item. We're not going to use 'blacklist' anymore.
+		if ( get_site_option( 'sitewide_comment_control' ) && array_key_exists( 'blacklist', get_site_option( 'sitewide_comment_control' ) ) ) {
+			$sitewide_comment_control              = get_site_option( 'sitewide_comment_control' );
+			$sitewide_comment_control['blocklist'] = $sitewide_comment_control['blacklist'];
+			unset( $sitewide_comment_control['blacklist'] );
+			update_site_option( 'sitewide_comment_control', $sitewide_comment_control );
+		}
 	}
 
 	public function activate() {
 		$sitewide_comment_control = array(
-			'blacklist' => array( 'trash@example.com' ),
+			'blocklist' => array( 'trash@example.com' ),
 			'modlist'   => array( 'moderate@example.com' ),
 			'spamlist'  => array( 'spammer@example.com' ),
 			'wildcards' => false,
@@ -90,31 +99,34 @@ class Sitewide_Comment_Control {
 		// Get the data
 		$scc_data = get_site_option( 'sitewide_comment_control' );
 
+		// Block List
+		$block_list = $scc_data['blocklist'];
+
 		// Assume they're not jerks
 		$is_bad = false;
 
-		// Bail early if it's not a comment or the user is logged in OR if the blacklist is empty.
-		if ( '' !== $data['comment_type'] || '' === $data['user_ID'] || empty( $scc_data['blacklist'] ) ) {
+		// Bail early if it's not a comment or the user is logged in OR if the block list is empty.
+		if ( '' !== $data['comment_type'] || '' === $data['user_ID'] || empty( $block_list ) ) {
 			return $data;
 		}
 
-		// If this person is already on a blacklist for a site on the network, we trust it.
-		if ( wp_blacklist_check( $data['comment_author'], $data['comment_author_email'], $data['comment_author_url'], $data['comment_content'], $data['user_ip'], $data['user_agent'] ) ) {
+		// If this person is already blocked for a site on the network, we trust it.
+		if ( wp_blocklist_check( $data['comment_author'], $data['comment_author_email'], $data['comment_author_url'], $data['comment_content'], $data['user_ip'], $data['user_agent'] ) ) {
 			return $data;
 		}
 
 		// Run the checks
-		if ( $this->blacklist_check( 'trash', $data['comment_author'], $data['comment_author_email'], $data['user_ip'] ) ) {
+		if ( $this->blocklist_check( 'trash', $data['comment_author'], $data['comment_author_email'], $data['user_ip'] ) ) {
 			$data['comment_approved'] = 0;
 			$data['comment_karma']    = 999;
 			$add_to_comment           = __( '-- FLAGGED AS TRASH BY NETWORK ADMIN', 'sitewide-comment-control' );
 			$data['comment_content'] .= "\n\n" . $add_to_comment;
-		} elseif ( $this->blacklist_check( 'spam', $data['comment_author'], $data['comment_author_email'], $data['user_ip'] ) ) {
+		} elseif ( $this->blocklist_check( 'spam', $data['comment_author'], $data['comment_author_email'], $data['user_ip'] ) ) {
 			$data['comment_approved'] = 0;
 			$data['comment_karma']    = 666;
 			$add_to_comment           = __( '-- FLAGGED AS SPAM BY NETWORK ADMIN', 'sitewide-comment-control' );
 			$data['comment_content'] .= "\n\n" . $add_to_comment;
-		} elseif ( $this->blacklist_check( 'moderate', $data['comment_author'], $data['comment_author_email'], $data['user_ip'] ) ) {
+		} elseif ( $this->blocklist_check( 'moderate', $data['comment_author'], $data['comment_author_email'], $data['user_ip'] ) ) {
 			$data['comment_approved'] = 0;
 		}
 
@@ -122,18 +134,18 @@ class Sitewide_Comment_Control {
 	}
 
 	/**
-	 * Blacklist Check
+	 * Blocklist Check
 	 * @param  [string] $comment_author_email
 	 * @param  [string] $comment_author
 	 * @param  [string] $user_ip
-	 * @return [bool]   true is the email or IP is on the blacklist.
+	 * @return [bool]   true is the email or IP is on the blocked list.
 	 */
-	public function blacklist_check( $type, $comment_author, $comment_author_email, $user_ip ) {
+	public function blocklist_check( $type, $comment_author, $comment_author_email, $user_ip ) {
 		$scc_data = get_site_option( 'sitewide_comment_control' );
 
 		switch ( $type ) {
 			case 'trash':
-				$words = $scc_data['blacklist'];
+				$words = $scc_data['blocklist'];
 				break;
 			case 'spam':
 				$words = $scc_data['spamlist'];
@@ -143,7 +155,7 @@ class Sitewide_Comment_Control {
 				break;
 		}
 
-		// Get blacklist
+		// Get block list
 		foreach ( $words as $word ) {
 			$word = trim( $word );
 
@@ -208,7 +220,7 @@ class Sitewide_Comment_Control {
 
 	public function options_page() {
 		$sitewide_comment_control = get_site_option( 'sitewide_comment_control' );
-		$blacklist                = ( is_array( $sitewide_comment_control['blacklist'] ) ) ? implode( "\n", $sitewide_comment_control['blacklist'] ) : '';
+		$blocklist                = ( is_array( $sitewide_comment_control['blocklist'] ) ) ? implode( "\n", $sitewide_comment_control['blocklist'] ) : '';
 		$spamlist                 = ( is_array( $sitewide_comment_control['spamlist'] ) ) ? implode( "\n", $sitewide_comment_control['spamlist'] ) : '';
 		$modlist                  = ( is_array( $sitewide_comment_control['modlist'] ) ) ? implode( "\n", $sitewide_comment_control['modlist'] ) : '';
 		?>
@@ -218,19 +230,19 @@ class Sitewide_Comment_Control {
 			<?php
 			if ( isset( $_POST['update'] ) && check_admin_referer( 'scc_saveit' ) ) {
 
-				$new_blacklist = $_POST['helf_scc_blacklist'];
+				$new_blocklist = $_POST['helf_scc_blocklist'];
 				$new_spamlist  = $_POST['helf_scc_spamlist'];
 				$new_modlist   = $_POST['helf_scc_modlist'];
 
-				// Check Blacklist
-				if ( empty( $_POST['helf_scc_blacklist'] ) ) {
-					$new_blacklist = '';
+				// Check Blocked List
+				if ( empty( $_POST['helf_scc_blocklist'] ) ) {
+					$new_blocklist = '';
 				} else {
-					$new_blacklist = explode( "\n", $new_blacklist );
-					$new_blacklist = array_filter( array_map( 'trim', $new_blacklist ) );
-					$new_blacklist = array_filter( array_map( 'sanitize_text_field', $new_blacklist ) );
-					$new_blacklist = array_unique( $new_blacklist );
-					$blacklist     = implode( "\n", $new_blacklist );
+					$new_blocklist = explode( "\n", $new_blocklist );
+					$new_blocklist = array_filter( array_map( 'trim', $new_blocklist ) );
+					$new_blocklist = array_filter( array_map( 'sanitize_text_field', $new_blocklist ) );
+					$new_blocklist = array_unique( $new_blocklist );
+					$blocklist     = implode( "\n", $new_blocklist );
 				}
 
 				// Check Spamlist
@@ -260,7 +272,7 @@ class Sitewide_Comment_Control {
 
 				// Rebuild and save
 				$new_scc = array(
-					'blacklist' => $new_blacklist,
+					'blocklist' => $new_blocklist,
 					'modlist'   => $new_modlist,
 					'spamlist'  => $new_spamlist,
 					'wildcards' => $new_wildcard,
@@ -296,11 +308,11 @@ class Sitewide_Comment_Control {
 					</tr>
 
 					<tr>
-						<th scope="row"><?php esc_html_e( 'Comment Blacklist', 'sitewide-comment-control' ); ?></th>
+						<th scope="row"><?php esc_html_e( 'Comment Block List', 'sitewide-comment-control' ); ?></th>
 						<td>
-							<fieldset><legend class="screen-reader-text"><span><?php esc_html_e( 'Comment Blacklist', 'sitewide-comment-control' ); ?></span></legend>
-								<p><label for="helf_scc_blacklist"><?php esc_html_e( 'When a comment contains any of these words in its author name, email, or IP address, it will be sent to trash on all sites on the network. One word or IP address per line. It will match inside words, so "press" will match "matt@wordpress.org" as well as "press@example.com".', 'sitewide-comment-control' ); ?></label></p>
-								<p><textarea name="helf_scc_blacklist" rows="10" cols="50" id="helf_scc_blacklist" class="large-text code"><?php echo $blacklist; ?></textarea></p>
+							<fieldset><legend class="screen-reader-text"><span><?php esc_html_e( 'Comment Block List', 'sitewide-comment-control' ); ?></span></legend>
+								<p><label for="helf_scc_blocklist"><?php esc_html_e( 'When a comment contains any of these words in its author name, email, or IP address, it will be sent to trash on all sites on the network. One word or IP address per line. It will match inside words, so "press" will match "matt@wordpress.org" as well as "press@example.com".', 'sitewide-comment-control' ); ?></label></p>
+								<p><textarea name="helf_scc_blocklist" rows="10" cols="50" id="helf_scc_blocklist" class="large-text code"><?php echo $blocklist; ?></textarea></p>
 							</fieldset>
 						</td>
 					</tr>
