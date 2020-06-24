@@ -99,20 +99,16 @@ class Sitewide_Comment_Control {
 		// Get the data
 		$scc_data = get_site_option( 'sitewide_comment_control' );
 
-		// Block List
-		$block_list = $scc_data['blocklist'];
+		// If all the lists are empty (true) then we won't be processing.
+		$empty_list = ( empty( $scc_data['blocklist'] ) && empty( $scc_data['spamlist'] ) && empty( $scc_data['modlist'] ) ) ? true : false;
 
-		// Assume they're not jerks
-		$is_bad = false;
-
-		// Bail early if it's not a comment or the user is logged in OR if the block list is empty.
-		if ( '' !== $data['comment_type'] || '' === $data['user_ID'] || empty( $block_list ) ) {
+		// Bail early if it's not a comment or the user is logged in OR if the lists are empty.
+		if ( '' !== $data['comment_type'] || '' === $data['user_ID'] || $empty_list ) {
 			return $data;
 		}
 
-		// If this person is already blocked for a site on the network, we trust it.
-		// NB, we have to check twice because WP renamed the function in 5.5 but we have to
-		// support pre 5.5
+		// If this person is already blocked for a site on the network, we trust it for this site.
+		// NB: Check twice because WP renamed the function in 5.5 but we still support pre 5.5.
 		if ( function_exists( 'wp_blocklist_check' ) ) {
 			if ( wp_blocklist_check( $data['comment_author'], $data['comment_author_email'], $data['comment_author_url'], $data['comment_content'], $data['user_ip'], $data['user_agent'] ) ) {
 				return $data;
