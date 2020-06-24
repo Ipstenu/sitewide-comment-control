@@ -42,29 +42,51 @@ This plugin is only network activate-able.
 
 = If I change the blocked list using this plugin, will it change the comment block lists per site? =
 
-No, this is completely separate.
+No. The sitewide lists do not edit the per-site lists.
+
+= What happens with people blocked per-site? =
+
+They remain blocked for that site, but <em>only</em> that site.
+
+= Who takes precedence? Sitewide lists or per-site lists? =
+
+This can be a little bit of a shell game. The answer is 'both' and 'neither'.
+
+The act of ''blocking'' a user takes precedence. This means if a site on the network marks a specific user to be blocked, even if the network option is set to spam, the comments will be blocked on that site. On the other hand, if the network blocks someone, that cannot be overruled by any site on the network.
+
+= Can I set specific emails or users to never be blocked? =
+
+Not at this time.
 
 = Does this list the rejected posters? =
 
-If you set comments to be spammed or moderated, they will show up in the appropriate section of your comments page. If you set comments to be trashed they get added and goes right to trash.
+Is so far as WordPress itself keeps rejected comments, yes.  If you set comments to be spammed or moderated, they will show up in the appropriate section of your comments page. If you set comments to be trashed they get added and go right to trash.
 
-= What does this check? =
+= What aspects of the commenter does this check? =
 
 Usernames, IP addresses, and email addresses.
 
-= Will this block partial emails? =
+= Can this block partial emails? =
 
-Yes. If you put `example.com` in your list, it will block `anything@example.com`.
+Yes. If you put `example.com` in your list, it will block `anything@example.com`. However it will also block `someoneelse@thisexample.com` so use the `@` when specificity is needed.
 
 **Be very careful when you do this!** If you put in just the letter `a` for example, you will block all email addresses with that letter. I strongly recommend you only use full domains ('example.com', not just 'example').
 
-= Will this block wildcards? =
+= Can this block wildcards? =
 
-That's optional. The logic is a little chancy and has a higher risk of catching innocents. However if you add `spammer@example.com` and turn on Wildcard checking, then `spammer+avoid@example.com` will be caught, but `spammer+another@gmail.com` **will not** be caught. The downside to this is that `spammerama@example.com` will also be caught. Use at your own risk.
+Yes, but it's optional because it's an experimental feature.
+
+The logic is a little chancy and has a higher risk of catching innocents. However if you add `spammer@example.com` and turn on Wildcard checking, then `spammer+avoid@example.com` will be caught, but `spammer+another@gmail.com` **will not** be caught. The downside to this is that `spammerama@example.com` will also be caught.
+
+Use at your own risk.
 
 = Will this block existing users? =
 
 This plugin will not block any logged in user, *even if* their email is on the list. If you don't want them commenting, delete their accounts. It's assumed if you let someone on your site, you mean for them to have access.
+
+= I have an existing user I cannot delete, but they're not welcome anymore. What can I do? =
+
+That's a tough one, I hear you. I recommend you reset their password and change their email to something invalid. Then you can add their old email to your block lists as needed. Sadly there is no plugin I know of that handles this for Multisite.
 
 = Does this work on MultiSite? =
 
@@ -74,10 +96,6 @@ Yes, it does.
 
 No. But then again, you don't need this on single installs.
 
-= What happens if a site on a network wants to block someone? =
-
-Per site _block lists_ override the network settings. This means if a site on the network marks a specific user to be blocked, even if the network option is set to spam, the comments will be blocked. On the other hand, if the network blocks someone, that cannot be overruled.
-
 = Where can I help develop this? =
 
 [Github](http://github.com/ipstenu/sitewide-comment-control) - pull requests are welcome.
@@ -85,8 +103,8 @@ Per site _block lists_ override the network settings. This means if a site on th
 == Changelog ==
 
 = 3.1 =
-* June 2020 by Ipstenu
-* Updated: Changed term for blocked users to Block List.
+* 24 June 2020 by Ipstenu
+* Updated: General: Remove “whitelist” and “blacklist” in favor of more clear and inclusive language.
 
 = 3.0 =
 * 27 December 2018 by Ipstenu
