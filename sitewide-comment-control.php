@@ -3,10 +3,11 @@
 Plugin Name: Sitewide Comment Control
 Plugin URI: http://github.com/ipstenu/sitewide-comment-control
 Description: Block specific users from commenting network wide by user ID or email.
-Version: 3.1
+Version: 3.1.1
 Author: Mika Epstein (Ipstenu)
 Author URI: http://halfelf.org/
 Network: true
+License: GPLv2 or Later
 
 Copyright 2012-20 Mika Epstein (email: ipstenu@halfelf.org)
 
@@ -109,8 +110,8 @@ class Sitewide_Comment_Control {
 
 		// If this person is already blocked for a site on the network, we trust it for this site.
 		// NB: Check twice because WP renamed the function in 5.5 but we still support pre 5.5.
-		if ( function_exists( 'wp_blocklist_check' ) ) {
-			if ( wp_blocklist_check( $data['comment_author'], $data['comment_author_email'], $data['comment_author_url'], $data['comment_content'], $data['user_ip'], $data['user_agent'] ) ) {
+		if ( function_exists( 'wp_check_comment_disallowed_list' ) ) {
+			if ( wp_check_comment_disallowed_list( $data['comment_author'], $data['comment_author_email'], $data['comment_author_url'], $data['comment_content'], $data['user_ip'], $data['user_agent'] ) ) {
 				return $data;
 			}
 		} else {

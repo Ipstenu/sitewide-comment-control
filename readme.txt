@@ -1,9 +1,9 @@
 === Sitewide Comment Control ===
 Contributors: Ipstenu
 Tags: comment, ban, moderate, spam, multisite, network
-Requires at least: 4.0
-Tested up to: 5.4
-Stable tag: 3.1
+Requires at least: 5.0
+Tested up to: 5.5
+Stable tag: 3.1.1
 PHP Version: 7.2
 Donate link: https://ko-fi.com/A236CEN/
 
@@ -102,9 +102,13 @@ No. But then again, you don't need this on single installs.
 
 == Changelog ==
 
+= 3.1.1 =
+* 23 July 2020 by Ipstenu
+* Changed function call for 5.5 compat, per https://make.wordpress.org/core/2020/07/23/codebase-language-improvements-in-5-5/
+
 = 3.1 =
 * 24 June 2020 by Ipstenu
-* Updated: General: Remove “whitelist” and “blacklist” in favor of more clear and inclusive language.
+* Updated: General: Remove “whitelist” and “blacklist” in favour of more clear and inclusive language.
 
 = 3.0 =
 * 27 December 2018 by Ipstenu
@@ -115,6 +119,3 @@ No. But then again, you don't need this on single installs.
 * New: Wildcards now supported (with caveats)
 
 == Upgrade Notice ==
-
-= 3.0 =
-Existing lists are converted to MODERATION on update, in order to allow for more granular filtering.
