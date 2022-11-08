@@ -1,9 +1,9 @@
 === Sitewide Comment Control ===
 Contributors: Ipstenu
 Tags: comment, ban, moderate, spam, multisite, network
-Requires at least: 5.0
+Requires at least: 5.7
 Tested up to: 6.1
-Stable tag: 3.1.1
+Stable tag: 3.1.2
 PHP Version: 7.2
 Donate link: https://ko-fi.com/A236CEN/
 
@@ -101,6 +101,11 @@ No. But then again, you don't need this on single installs.
 [Github](http://github.com/ipstenu/sitewide-comment-control) - pull requests are welcome.
 
 == Changelog ==
+
+= 3.1.2 =
+* TBD by Ipstenu
+* Dropping support for WP 5.5
+* Removing support for the old options
 
 = 3.1.1 =
 * 23 July 2020 by Ipstenu
